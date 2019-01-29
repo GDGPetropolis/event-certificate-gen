@@ -1,10 +1,10 @@
 from textwrap import wrap
 
 
-class PdfHelper(object):
+class PdfTextHelper(object):
 
     @classmethod
-    def write_text_block(cls, canvas, text, x, y, font_size, vertical_space, horizontal_limit_width):
+    def write_block(cls, canvas, text, x, y, font_size, vertical_space, horizontal_limit_width):
         lines = wrap(text, horizontal_limit_width)
 
         jump_line = 0

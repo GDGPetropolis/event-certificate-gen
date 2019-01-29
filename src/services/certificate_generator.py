@@ -2,30 +2,22 @@ import os
 from textwrap import wrap
 from reportlab.pdfgen import canvas
 from src.entities.certificate_info import CertificateInfo
-from src.infrastructure.pdf_helper import PdfHelper
+from src.infrastructure.directory_helper import DirectoryHelper
+from src.infrastructure.name_helper import NameHelper
+from src.infrastructure.pdf_text_helper import PdfTextHelper
 
 
 class CertificateGenerator(object):
     cerfiticate_info = None
     participant = None
 
-    def __init__(self, cerfiticate_info = CertificateInfo):
+    def __init__(self, cerfiticate_info: CertificateInfo):
         self.cerfiticate_info = cerfiticate_info
 
     def generate(self, participant: str):
         if participant:
             self.participant = participant
             self.__generate_pdf()
-
-    def __get_event_folder_name(self):
-        return "output/" + self.cerfiticate_info.event_name
-
-    def __get_participant_file_name(self, folder: str):
-        return folder + "/" + self.participant + ".pdf"
-
-    def __create_event_folder_if_doesnt_exist(self, folder_name: str):
-        if not os.path.exists(folder_name):
-            os.makedirs(folder_name)
 
     def __build_description(self):
         description = self.cerfiticate_info.description
@@ -46,16 +38,14 @@ class CertificateGenerator(object):
         x = 215
         y = 700
 
-        folder_name = self.__get_event_folder_name()
-        self.__create_event_folder_if_doesnt_exist(folder_name)
-
-        file_name = self.__get_participant_file_name(folder_name)
+        DirectoryHelper.create_folder_if_doesnt_exist(self.cerfiticate_info)
+        file_name = NameHelper.get_participant_file_name(self.cerfiticate_info, self.participant)
 
         c = canvas.Canvas(file_name, pagesize=(1920, 1080))
         c.setStrokeColorRGB(0, 0, 0)
         c.setFillColorRGB(0, 0, 0)
 
-        PdfHelper.write_text_block(c, self.__build_description(), x, y, font_size, vertical_space, horizontal_limit_width)
+        PdfTextHelper.write_block(c, self.__build_description(), x, y, font_size, vertical_space, horizontal_limit_width)
 
         c.showPage()
 
