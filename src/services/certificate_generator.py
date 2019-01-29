@@ -2,6 +2,7 @@ import os
 from textwrap import wrap
 from reportlab.pdfgen import canvas
 from src.entities.certificate_info import CertificateInfo
+from src.infrastructure.pdf_helper import PdfHelper
 
 
 class CertificateGenerator(object):
@@ -39,6 +40,12 @@ class CertificateGenerator(object):
         return description
 
     def __generate_pdf(self):
+        font_size = 35
+        vertical_space = 50
+        horizontal_limit_width = 80
+        x = 215
+        y = 700
+
         folder_name = self.__get_event_folder_name()
         self.__create_event_folder_if_doesnt_exist(folder_name)
 
@@ -48,30 +55,8 @@ class CertificateGenerator(object):
         c.setStrokeColorRGB(0, 0, 0)
         c.setFillColorRGB(0, 0, 0)
 
-        self.__write_description(215, 700, c)
+        PdfHelper.write_text_block(c, self.__build_description(), x, y, font_size, vertical_space, horizontal_limit_width)
 
         c.showPage()
 
         c.save()
-
-    def __write_description(self, x, y, canvas):
-        font_size = 35
-        vertinal_space = 50
-        horizontal_limit_width = 80
-
-        lines = wrap(self.__build_description(), horizontal_limit_width)
-
-        jump_line = 0
-        for line in lines:
-            print(len(line))
-            t = canvas.beginText()
-            t.setFont('Helvetica', font_size)
-            t.setCharSpace(3)
-            t.setTextOrigin(x, y-(jump_line*vertinal_space))
-            t.textLine(self.__get_line_centralized(line, horizontal_limit_width))
-            canvas.drawText(t)
-            jump_line = jump_line + 1
-
-    def __get_line_centralized(self, line, size):
-        space_to_add = int((size - len(line)) / 2)
-        return (" " * space_to_add) + line

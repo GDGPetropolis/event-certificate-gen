@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from src.entities.certificate_info import CertificateInfo
 from src.services.certificate_generator import CertificateGenerator
 
