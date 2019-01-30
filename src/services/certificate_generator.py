@@ -1,5 +1,3 @@
-import os
-from textwrap import wrap
 from reportlab.pdfgen import canvas
 from src.entities.certificate_info import CertificateInfo
 from src.infrastructure.description_helper import DescriptionHelper
