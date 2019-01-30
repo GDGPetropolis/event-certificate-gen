@@ -22,8 +22,10 @@ class CertificateGenerator(object):
         font_size = 35
         vertical_space = 50
         horizontal_limit_width = 80
-        x = 215
-        y = 700
+        text_block_x = 215
+        text_block_y = 700
+        sign_x = 850
+        sign_y = 200
         description = DescriptionHelper.interpolate(self.cerfiticate_info, self.participant)
 
         DirectoryHelper.create_folder_if_doesnt_exist(self.cerfiticate_info)
@@ -33,7 +35,9 @@ class CertificateGenerator(object):
         c.setStrokeColorRGB(0, 0, 0)
         c.setFillColorRGB(0, 0, 0)
 
-        PdfTextHelper.write_block(c, description, x, y, font_size, vertical_space, horizontal_limit_width)
+        PdfTextHelper.write_block(c, description, text_block_x, text_block_y, font_size, vertical_space, horizontal_limit_width)
+
+        c.drawImage(self.cerfiticate_info.signature, sign_x, sign_y, mask='auto', width=200, height=200)
 
         c.showPage()
 

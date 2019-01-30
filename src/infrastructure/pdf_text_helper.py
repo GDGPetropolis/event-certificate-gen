@@ -19,5 +19,5 @@ class PdfTextHelper(object):
 
     @classmethod
     def __get_line_centralized(cls, line, size):
-        space_to_add = int((size - len(line)) / 2)
+        space_to_add = int((size - len(line)) / 2*1.33)
         return (" " * space_to_add) + line
