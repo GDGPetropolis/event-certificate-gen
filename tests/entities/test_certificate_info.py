@@ -1,4 +1,4 @@
-from src.entities.certificate_info import CertificateInfo
+from certificategen.entities.certificate_info import CertificateInfo
 
 
 def test_random():

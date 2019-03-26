@@ -1,15 +1,13 @@
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from reportlab.pdfgen import canvas
-from src.entities.certificate_info import CertificateInfo
-from src.infrastructure.description_helper import DescriptionHelper
-from src.infrastructure.directory_helper import DirectoryHelper
-from src.infrastructure.name_helper import NameHelper
-from src.infrastructure.pdf_text_helper import PdfTextHelper
+from certificategen.entities.certificate_info import CertificateInfo
+from certificategen.infrastructure.description_helper import DescriptionHelper
+from certificategen.infrastructure.directory_helper import DirectoryHelper
+from certificategen.infrastructure.name_helper import NameHelper
+from certificategen.infrastructure.pdf_text_helper import PdfTextHelper
 
 
 class CertificateGenerator(object):
-    cerfiticate_info = None
-    participant = None
 
     def __init__(self, cerfiticate_info: CertificateInfo):
         self.cerfiticate_info = cerfiticate_info
@@ -26,8 +24,8 @@ class CertificateGenerator(object):
         horizontal_limit_width = 60
         text_block_x = 430
         text_block_y = 650
-        sign_x = 850
-        sign_y = 180
+        sign_x = 630
+        sign_y = -30
         description = DescriptionHelper.interpolate(self.cerfiticate_info, self.participant)
 
         DirectoryHelper.create_folder_if_doesnt_exist(self.cerfiticate_info)
@@ -40,7 +38,7 @@ class CertificateGenerator(object):
         PdfTextHelper.write_block(c, description, text_block_x, text_block_y, font_size, vertical_space,
                                   horizontal_limit_width)
 
-        c.drawImage(self.cerfiticate_info.signature, sign_x, sign_y, mask='auto', width=200, height=200)
+        c.drawImage(self.cerfiticate_info.signature, sign_x, sign_y, mask='auto', width=650, height=650)
 
         c.showPage()
 

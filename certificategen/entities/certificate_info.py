@@ -2,14 +2,6 @@ import uuid
 
 
 class CertificateInfo(object):
-    event_name = None
-    event_type = None
-    action = None
-    description = None
-    date = None
-    organizer = None
-    background = None
-
     def __init__(self, event_name: str, event_type: str, action: str, description: str, date: str, organizer: str, signature: str, background: str):
         self.event_name = event_name
         self.event_type = event_type
