@@ -1,7 +1,7 @@
 import os
 
-from src.entities.certificate_info import CertificateInfo
-from src.infrastructure.name_helper import NameHelper
+from certificategen.entities.certificate_info import CertificateInfo
+from certificategen.infrastructure.name_helper import NameHelper
 
 
 class DirectoryHelper(object):
